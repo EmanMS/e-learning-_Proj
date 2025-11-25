@@ -1,0 +1,9 @@
+django
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+pillow
+cloudinary
+django-cloudinary-storage
+stripe
+paypalrestsdk
