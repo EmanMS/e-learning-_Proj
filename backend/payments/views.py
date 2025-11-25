@@ -1,12 +1,11 @@
 from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets, permissions
 from .models import Payment
 from courses.models import Course, Enrollment
 from .paypal import create_order, capture_order
-
-from rest_framework import permissions
+from .serializers import PaymentSerializer
 
 class CreateOrderView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -37,6 +36,7 @@ class CreateOrderView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class CaptureOrderView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     """Capture a PayPal order after the buyer approved it.
     Marks the payment as succeeded and enrolls the user.
     """
@@ -54,3 +54,11 @@ class CaptureOrderView(APIView):
             return Response({'error': 'Payment not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for viewing payment history"""
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PaymentSerializer
+
+    def get_queryset(self):
+        return Payment.objects.filter(user=self.request.user).order_by('-created_at')

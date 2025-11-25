@@ -17,6 +17,7 @@ import Assignment from './pages/Assignment';
 import Discussion from './pages/Discussion';
 import Notifications from './pages/Notifications';
 import InstructorAnalytics from './pages/InstructorAnalytics';
+import PaymentHistory from './pages/PaymentHistory';
 
 // Wrapper to redirect based on role
 const DashboardRedirect = () => {
@@ -112,6 +113,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Discussion />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/payment-history"
+                element={
+                  <ProtectedRoute>
+                    <PaymentHistory />
                   </ProtectedRoute>
                 }
               />

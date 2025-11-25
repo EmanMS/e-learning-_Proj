@@ -46,9 +46,9 @@ const Navbar = () => {
 
     return (
         <nav className="bg-gray-800 text-white p-4 shadow-md relative z-50">
-            <div className="container mx-auto flex justify-between items-center">
+            <div className="container mx-auto flex justify-between items-center flex-wrap">
                 <Link to="/" className="text-xl font-bold">E-Learning Platform</Link>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
                     {user ? (
                         <>
                             <div className="relative">
@@ -64,7 +64,7 @@ const Navbar = () => {
                                     )}
                                 </button>
                                 {showNotifications && (
-                                    <div className="absolute right-0 mt-2 w-80 bg-white text-black rounded shadow-lg overflow-hidden border">
+                                    <div className="absolute right-0 mt-2 w-80 bg-white text-black rounded shadow-lg overflow-hidden border z-50">
                                         <div className="p-2 border-b font-bold bg-gray-50">Notifications</div>
                                         <div className="max-h-64 overflow-y-auto">
                                             {notifications.length > 0 ? (
@@ -86,25 +86,29 @@ const Navbar = () => {
                                 )}
                             </div>
 
-                            <Link to="/dashboard" className="hover:text-gray-300">Dashboard</Link>
+                            <Link to="/dashboard" className="hover:text-gray-300 text-sm sm:text-base">Dashboard</Link>
                             {user.role === 'INSTRUCTOR' && (
                                 <>
-                                    <Link to="/courses/new" className="hover:text-gray-300">Create Course</Link>
-                                    <Link to="/analytics" className="hover:text-gray-300">Analytics</Link>
+                                    <Link to="/courses/new" className="hover:text-gray-300 text-sm sm:text-base">Create Course</Link>
+                                    <Link to="/analytics" className="hover:text-gray-300 text-sm sm:text-base">Analytics</Link>
                                 </>
                             )}
-                            <Link to="/profile" className="flex items-center gap-2 hover:text-gray-300">
-                                <User size={20} />
-                                Profile
+                            {user.role === 'STUDENT' && (
+                                <Link to="/payment-history" className="hover:text-gray-300 text-sm sm:text-base">Payments</Link>
+                            )}
+                            <Link to="/profile" className="flex items-center gap-1 sm:gap-2 hover:text-gray-300 text-sm sm:text-base">
+                                <User size={18} />
+                                <span className="hidden sm:inline">Profile</span>
                             </Link>
-                            <button onClick={handleLogout} className="flex items-center gap-1 hover:text-red-400">
-                                <LogOut size={18} /> Logout
+                            <button onClick={handleLogout} className="flex items-center gap-1 hover:text-red-400 text-sm sm:text-base">
+                                <LogOut size={16} />
+                                <span className="hidden sm:inline">Logout</span>
                             </button>
                         </>
                     ) : (
                         <>
-                            <Link to="/login" className="hover:text-gray-300">Login</Link>
-                            <Link to="/register" className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">Register</Link>
+                            <Link to="/login" className="hover:text-gray-300 text-sm sm:text-base">Login</Link>
+                            <Link to="/register" className="bg-blue-600 px-3 py-2 sm:px-4 rounded hover:bg-blue-700 text-sm sm:text-base">Register</Link>
                         </>
                     )}
                 </div>
